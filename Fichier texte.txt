@@ -1,0 +1,177 @@
+import 'package:flutter/material.dart';
+import 'package:bitsdojo_window/bitsdojo_window.dart';
+
+void main() {
+  runApp(MyApp());
+
+  // Configure la fenêtre principale
+  doWhenWindowReady(() {
+    final initialSize = Size(600, 450);
+    appWindow.minSize = initialSize;
+    appWindow.size = initialSize;
+    appWindow.alignment = Alignment.center;
+    appWindow.show();
+  });
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Desktop Demo',
+      home: MainScreen(),
+    );
+  }
+}
+
+class MainScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Main Window'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            openNewWindow();
+          },
+          child: Text('Open New Window'),
+        ),
+      ),
+    );
+  }
+
+
+
+
+  Dialog
+
+
+
+  import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Dialog Demo',
+      home: MainScreen(),
+    );
+  }
+}
+
+class MainScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Main Window'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            showMyDialog(context);
+          },
+          child: Text('Show Dialog'),
+        ),
+      ),
+    );
+  }
+
+  Future<void> showMyDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // Utilisateur ne peut pas fermer le dialogue en cliquant en dehors
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('This is a Dialog'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('This is the content of the dialog.'),
+                Text('You can add more widgets here.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+
+
+
+Future<void> showCustomDialog(BuildContext context) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Container(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Custom Dialog'),
+              SizedBox(height: 15),
+              Text('You can add more complex content here.'),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Close'),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+  void openNewWindow() {
+    runApp(NewWindowApp());
+    doWhenWindowReady(() {
+      final newSize = Size(400, 300);
+      appWindow.minSize = newSize;
+      appWindow.size = newSize;
+      appWindow.alignment = Alignment.center;
+      appWindow.show();
+    });
+  }
+}
+
+class NewWindowApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'New Window',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('New Window'),
+        ),
+        body: Center(
+          child: Text('This is a new window'),
+        ),
+      ),
+    );
+  }
+}
