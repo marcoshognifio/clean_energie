@@ -1,12 +1,15 @@
 import 'package:clean_energie/component/constante_value.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../component/button.dart';
 import '../data/data.dart';
 import 'objects.dart';
 
 class ResultProject extends StatefulWidget {
-  const ResultProject({super.key});
+  ResultProject({super.key});
+
+  List<DataRow> dataRow = [];
 
   @override
   State<ResultProject> createState() => _ResultProjectState();
@@ -82,21 +85,15 @@ class _ResultProjectState extends State<ResultProject> {
                             ),
                           ),
                         ),
-                        DataTable(
-                          border: TableBorder.all(
-                              width: 2,
-                              color: Colors.white,
-                          ),
-                          headingRowColor: WidgetStateColor.resolveWith((states) => colorApp),
-                          headingTextStyle: const TextStyle(
-                            fontFamily: "Oswald-Light",
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            wordSpacing: 3,
-                          ),
-                          columns:listDataColumn(listColumn),
-                          rows: const []
+                        ChangeNotifierProvider(
+                          create: (BuildContext context)=>notifier,
+                          child: Consumer<ChangeListData>(
+                              builder: (context,notifier,_)=>Table(
+                                border: TableBorder.all(color: Colors.white),
+                                columnWidths: columnHeadWidth(listColumn),
+                                children: listItemsRow(listColumn, notifier.dataList),
+                              ),
+                          )
                         ),
                       ],
                     ),
@@ -124,7 +121,7 @@ class _ResultProjectState extends State<ResultProject> {
                             const Spacer(),
 
                             Button(text: 'Lancer le bilan',fontSize: 13,width: 170,height: 50, onTap: () {
-                              Navigator.of(context).pop();
+                              Navigator.of(context).pushNamed('/bilanResult');
                             },),
 
                             const Spacer()
@@ -149,27 +146,6 @@ class _ResultProjectState extends State<ResultProject> {
         ],
       ),
     );
-  }
-
-  List<DataColumn> listDataColumn(List items){
-    TextStyle columnStyle = const TextStyle(
-      fontFamily: "Oswald-Light",
-      color: Colors.white,
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-      wordSpacing: 3,
-    );
-    List<DataColumn> result=[];
-    for(int i=0,a=items.length;i<a;i++){
-      result.add( DataColumn(
-          headingRowAlignment: MainAxisAlignment.start,
-          label: Text(items[i],
-              style: columnStyle
-          )
-      ),);
-    }
-
-    return result;
   }
 
   Widget entryField(String text,String type,RegExp express,TextEditingController controller,bool required,String error){
@@ -256,6 +232,58 @@ class _ResultProjectState extends State<ResultProject> {
         ],
       ),
     );
+  }
+
+  List<TableRow> listItemsRow(List headItems,List<List> items){
+    List<TableRow> result = [];
+    TextStyle style = const TextStyle(
+      fontFamily: "Oswald-Normal",
+      color: Colors.black,
+      fontSize: 17,
+      wordSpacing: 3,
+    );
+    result.add(
+      TableRow(
+          children: headItems.map((item) => Center(
+            child: Padding(
+              padding: const EdgeInsets.all(7.0),
+              child: Text(item,
+                style: const TextStyle(
+                  fontFamily: "Oswald-Normal",
+                  color: Colors.white,
+                  fontSize: 17,
+                  wordSpacing: 3,
+                ),
+              ),
+            ),
+          ),).toList()
+      ),
+    );
+
+    for(int i=0,c=items.length;i<c;i++){
+      List<Widget> listWidget = [];
+      listWidget.add(
+          Center(child: Padding(
+            padding: const EdgeInsets.only(top: 10.0,bottom: 10.0),
+            child: Text('${i + 1}',style: style,),
+          ))
+      );
+      for(int j=0,a=items[i].length;j<a;j++){
+        listWidget.add(Center(child: Padding(
+          padding: const EdgeInsets.only(top: 10.0,bottom: 10.0),
+          child: Text('${items[i][j]}',style: style,),
+        )));
+      }
+      result.add(
+          TableRow(
+              decoration: BoxDecoration(
+                  color: colorRow[i%2]
+              ),
+              children: listWidget
+          )
+      );
+    }
+    return result;
   }
 }
 

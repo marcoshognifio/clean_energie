@@ -34,17 +34,18 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: any
-  sqflite_common_ffi: any
-  bitsdojo_window: any
-  provider: any
-  image_picker: any
-  intl: any
-  font_awesome_flutter: any
-  window_manager:  ^0.3.8
+  cupertino_icons: ^1.0.8
+  sqflite_common_ffi: ^2.3.3
+  bitsdojo_window: ^0.1.6
+  provider: ^6.1.2
+  image_picker: ^1.1.2
+  intl: ^0.19.0
+  font_awesome_flutter: ^10.7.0
+  window_manager:  ^0.4.2
   google_fonts: ^6.2.1
-  path: any
-  sqlite3_flutter_libs: any
+  path: ^1.9.0
+  sqlite3_flutter_libs: ^0.5.24
+  fl_chart: ^0.69.0
 
 
 dev_dependencies:
@@ -102,6 +103,12 @@ flutter:
       fonts:
         - asset: assets/FONTS/Oswald-Bold.ttf
         - asset: assets/FONTS/Oswald-Bold.ttf
+          style: normal
+
+    - family: "Oswald-Normal"
+      fonts:
+        - asset: assets/FONTS/Oswald-VariableFont_wght.ttf
+        - asset: assets/FONTS/Oswald-VariableFont_wght.ttf
           style: normal
 
   #   - family: Trajan Pro

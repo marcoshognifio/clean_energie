@@ -192,3 +192,6 @@ class KeepIndex {
 
 List<String> listColumn = ['N°','Equipements','Qté','Puissance','Rend','T-diurne',
   'T-noctur','Coef Dé'];
+
+List<String> listColumnBilan = ['N°','Equipements','Qté','Puissance','Rend','T-diurne',
+  'T-noctur','Coef Dé','Puiss Tot','Energie'];

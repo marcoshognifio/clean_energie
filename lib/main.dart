@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:clean_energie/bilan/bilan_result.dart';
 import 'package:clean_energie/project/create_project.dart';
 import 'package:clean_energie/test.dart';
 import 'package:clean_energie/welcome_page.dart';
@@ -52,7 +52,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (context) => const CreateProject());
 
       case '/result_project':
-        return MaterialPageRoute(builder: (context) => const ResultProject());
+        return MaterialPageRoute(builder: (context) => ResultProject());
+
+      case '/bilanResult':
+        return MaterialPageRoute(builder: (context) => const BilanResult());
 
     }
     return null;

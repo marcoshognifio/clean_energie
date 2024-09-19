@@ -83,7 +83,8 @@ class _LeftSideState extends State<LeftSide> {
               }),
             ),
             buttonProject('OUVRIR UN PROJET', (){}),
-           const  Spacer()
+            const Spacer(),
+            Image.asset('assets/RESSOURCES1/solar-ai.png',width: 200,)
           ],
         ),
       ),

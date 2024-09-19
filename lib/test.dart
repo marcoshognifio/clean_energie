@@ -1,91 +1,90 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+
 class MyAppA extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+
+  List<String> item = ['Apple','Orange','Banana'];
+  List<int> element = [10,20,50];
+  int maxPower = 0;
+
+
+@override
+Widget build(BuildContext context) {
+
+  return MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(
+        title: const Text('Diagramme de Bâton avec fl_chart'),
       ),
-      home: DynamicPageViewWithButton(),
-    );
-  }
-}
+      body: Center(
+        child: BarChart(
+          BarChartData(
+            alignment: BarChartAlignment.spaceAround,
+            maxY: 1.0*element.reduce((a, b) => a > b ? a : b),
+            titlesData: FlTitlesData(
+              bottomTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  getTitlesWidget: (double value, TitleMeta meta) {
+                    const style = TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    );
+                    int c=item.length;
+                    for(int i=0;i<c;i++){
+                      if(value.toInt() == i ){
+                        return Text(item[i], style: style);
+                      }
+                    }
+                    return const Text('');
 
-
-class DynamicPageViewWithButton extends StatefulWidget {
-  @override
-  _DynamicPageViewWithButtonState createState() => _DynamicPageViewWithButtonState();
-}
-
-class _DynamicPageViewWithButtonState extends State<DynamicPageViewWithButton> {
-  final PageController _pageController = PageController();
-  List<Widget> _pages = [];
-  int _currentIndex = 0;
-  int _pageCounter = 1; // Compteur pour suivre le numéro des pages
-
-  @override
-  void initState() {
-    super.initState();
-    // Initialiser les deux premières pages
-    _pages = [buildPage(_pageCounter++), buildPage(_pageCounter++)];
-  }
-
-  Widget buildPage(int index) {
-    return Container(
-      color: Colors.primaries[index % Colors.primaries.length],
-      child: Center(
-        child: Text(
-          'Page $index',
-          style: TextStyle(color: Colors.white, fontSize: 30),
-        ),
-      ),
-    );
-  }
-
-  void _onPageChanged(int index) {
-    setState(() {
-      _currentIndex = index; // Met à jour l'index actuel pour le suivi
-    });
-  }
-
-  void _goToNextPage() {
-    if (_pageController.hasClients) {
-      _pageController.nextPage(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      ).then((_) {
-
-        setState(() {
-          _pages.removeAt(0);
-          _pages.add(buildPage(_pageCounter++));
-          _pageController.jumpToPage(0);
-        });
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: PageView.builder(
-            controller: _pageController,
-            onPageChanged: _onPageChanged,
-            itemCount: _pages.length,
-            itemBuilder: (context, index) {
-              return _pages[index];
-            },
+                  },
+                ),
+              ),
+              leftTitles: AxisTitles(
+              sideTitles: SideTitles(
+              showTitles: true,
+              interval: 2, // Espacement entre les valeurs de l'axe Y
+              getTitlesWidget: (double value, TitleMeta meta) {
+                if (value % 5 == 0) {
+                  return Text(value.toInt().toString(), style: const TextStyle(fontSize: 12));
+                }
+                return Container();
+              },
+            ),
+          )
+            ),
+            barGroups:listBar()
           ),
         ),
-        ElevatedButton(
-          onPressed: _goToNextPage,
-          child: Text('Page Suivante'),
-        ),
-      ],
-    );
+      )
+    ),
+  );
   }
+
+  List<BarChartGroupData> listBar(){
+
+    List<BarChartGroupData> result = [];
+    for(int i=0,c=element.length;i<c;i++){
+      result.add(
+        BarChartGroupData(
+          x: i,
+          barRods: [
+            BarChartRodData(
+              toY: 1.0*element[i],
+              color: Colors.blue,
+              width: 15,
+            ),
+          ],
+        ),
+      );
+
+    }
+
+    return result;
+  }
+
+
 }
