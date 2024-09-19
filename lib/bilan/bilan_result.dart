@@ -39,7 +39,7 @@ class _BilanResultState extends State<BilanResult> {
           Center(
             child: Container(
               width: 1150,
-              height: 700,
+              height: 750,
               decoration: BoxDecoration(
                   color: const Color(0xFFBDD7EE).withOpacity(0.78),
                   border: Border.all(color: colorBorder,width: 2),
@@ -49,7 +49,83 @@ class _BilanResultState extends State<BilanResult> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only( top: 50.0,bottom: 50, left: 30,right: 30),
+                    padding: const EdgeInsets.only( top: 50.0,bottom: 10, left: 30,right: 30),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 500,
+                          padding: const EdgeInsets.only(left: 10, top: 10,bottom: 10),
+                          decoration: BoxDecoration(
+                            color: colorRow[1],
+                            border: Border.all(color: colorBorder)
+                          ),
+                          child:Row(
+                            children: [
+                              Text('Nom Projet',
+                                  style: TextStyle(
+                                    color: colorApp,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                    wordSpacing: 3,
+                                  )
+                              ),
+                              Container(
+                                width: 100,
+                                height: 35,
+                                margin: const EdgeInsets.only(left: 10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(color: colorBorder)
+                                ),
+                                child: Center(child: Text('CEFA',
+                                    style: TextStyle(
+                                        color: colorProject,
+                                        fontSize: 17
+                                    ),
+                                ),),
+                              ),
+                              Container(width: 50,),
+                              Text('Num Projet',
+                                  style: TextStyle(
+                                    color: colorApp,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                    wordSpacing: 3,
+                                  )
+                              ),
+                              Container(
+                                width: 100,
+                                height: 35,
+                                margin: const EdgeInsets.only(left: 10),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(color: colorBorder)
+                                ),
+                                child:Center(child: Text('001',
+                                    style: TextStyle(
+                                        color: colorProject,
+                                        fontSize: 17
+                                    ),
+                                )),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Spacer(),
+                        Text('BILAN DES CHARGES',
+                          style: TextStyle(
+                              fontFamily: 'Kanit-Bold',
+                              color: colorApp,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 23
+                          ),
+                        ),
+                        const Spacer()
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only( top: 20.0,bottom: 20, left: 30,right: 30),
                     child: Table(
                       border: TableBorder.all(color: Colors.white),
                       columnWidths: columnHeadWidth(listColumnBilan),

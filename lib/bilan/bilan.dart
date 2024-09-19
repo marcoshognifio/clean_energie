@@ -244,6 +244,9 @@ class _ResultProjectState extends State<ResultProject> {
     );
     result.add(
       TableRow(
+          decoration: BoxDecoration(
+              color: colorApp
+          ),
           children: headItems.map((item) => Center(
             child: Padding(
               padding: const EdgeInsets.all(7.0),
