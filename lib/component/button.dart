@@ -46,7 +46,7 @@ class _ButtonState extends State<Button> {
           ),
         ),
         onPressed: ()async{
-          await _handleClick();
+          //await _handleClick();
           widget.onTap();
         },
         child: Text(widget.text,

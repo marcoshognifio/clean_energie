@@ -171,7 +171,6 @@ class _ScrollPageState extends State<ScrollPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("building");
     return  Container(
         width: 550,
         height: 500,
@@ -213,13 +212,13 @@ class _ScrollPageState extends State<ScrollPage> {
                 child: Row(
                   children: [
                     const Spacer(),
-                    Button(text: 'Annuler',fontSize: 15,width: 100,height: 40,
+                    Button(text: 'Annuler',fontSize: 15,width: 100,height: 40,backgroundColor: colorApp,
                       onTap: () async {widget.overlayEntry.remove();},
                     ),
 
                     const Spacer(),
 
-                    Button(text: 'Valider',fontSize: 15,width: 100,height: 40,
+                    Button(text: 'Valider',fontSize: 15,width: 100,height: 40,backgroundColor: colorApp,
                         onTap: () {
                           Navigator.of(context).pop();
                         }
@@ -227,7 +226,7 @@ class _ScrollPageState extends State<ScrollPage> {
 
                     const Spacer(),
 
-                    Button(text: 'Suivant',fontSize: 15,width: 100,height: 40,
+                    Button(text: 'Suivant',fontSize: 15,width: 100,height: 40,backgroundColor: colorApp,
                         onTap: () {
 
                           notifier.addData(getData());
@@ -274,12 +273,12 @@ class _ScrollPageState extends State<ScrollPage> {
               child: Column(
                 children: [
                   entryField('Nom & Model:', 'text', RegExp(r''),objectNameController, true,null, '',20,200),
+                  entryField('Quantité:', 'text', RegExp(r'^[0-9]+$'), quantityController, true,null, '',20,200),
                   entryField('Puissance:', 'text', RegExp(r'^[0-9]+{\.}?[0-9]+$'), powerController, true,'(W)', '',20,200),
                   entryField('Rendement:', 'text', RegExp(r'^[0-9]+{\.}?[0-9]+$'), yieldController, true,null, '',20,200),
-                  entryField('Coef démarrage:', 'text', RegExp(r'^[0-9]+{\.}?[0-9]+$'), cofStartController, true,null, '',20,200),
                   entryField('Duré Diurne:', 'text', RegExp(r'^[0-9]+$'), diurnalDurationController, true,'(H)', '',20,200),
                   entryField('Durée nocturne:', 'text', RegExp(r'^[0-9]+$'), nightDurationController, true,'(H)', '',20,200),
-                  entryField('Quantité:', 'text', RegExp(r'^[0-9]+$'), quantityController, true,null, '',20,200),
+                  entryField('Coef démarrage:', 'text', RegExp(r'^[0-9]+{\.}?[0-9]+$'), cofStartController, true,null, '',20,200),
                 ],
               ),
             ),
@@ -335,7 +334,7 @@ Map<int, TableColumnWidth> columnHeadWidth(List items){
 
 class ChangeListData with ChangeNotifier {
 
-  List<List>dataList =[];
+  List<List<TextEditingController>> dataList =[];
   List<List<int>> dataPowerEnergy =[[],[]];
   int totEnergy = 0;
   int totPower = 0;
@@ -357,8 +356,41 @@ class ChangeListData with ChangeNotifier {
   }
 
   addData(List newData){
-    dataList.add(newData);
+    dataList.add(
+      [
+        TextEditingController(text: '${newData[0]}'),
+        TextEditingController(text: '${newData[1]}'),
+        TextEditingController(text: '${newData[2]}'),
+        TextEditingController(text: '${newData[3]}'),
+        TextEditingController(text: '${newData[4]}'),
+        TextEditingController(text: '${newData[5]}'),
+        TextEditingController(text: '${newData[6]}'),
+      ]
+    );
     notifyListeners();
+  }
+
+  List<List> getData(){
+    List<List> data = [];
+    dataPowerEnergy = [[],[]];
+    for(int i=0,c=dataList.length;i<c;i++){
+      data.add(
+        [
+          dataList[i][0].text,
+          dataList[i][1].text,
+          dataList[i][2].text,
+          dataList[i][3].text,
+          dataList[i][4].text,
+          dataList[i][5].text,
+          dataList[i][6].text,
+        ]
+      );
+      int power = int.parse(dataList[i][2].text) * int.parse(dataList[i][1].text),
+          t = int.parse(dataList[i][4].text) + int.parse(dataList[i][5].text);
+      dataPowerEnergy[0].add(power);
+      dataPowerEnergy[1].add(power * t);
+    }
+    return data;
   }
 }
 

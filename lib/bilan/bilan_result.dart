@@ -129,7 +129,7 @@ class _BilanResultState extends State<BilanResult> {
                     child: Table(
                       border: TableBorder.all(color: Colors.white),
                       columnWidths: columnHeadWidth(listColumnBilan),
-                      children: listDataRow(listColumnBilan, notifier.dataList),
+                      children: listDataRow(listColumnBilan,  notifier.getData()),
                     ),
                   ),
                  Padding(
@@ -223,13 +223,13 @@ class _BilanResultState extends State<BilanResult> {
                                     padding: const EdgeInsets.only(top: 50),
                                     child: Row(
                                       children: [
-                                        Button(text: 'IMPRIMER Le BILAN',fontSize: 13,width: 200,height: 50,
+                                        Button(text: 'IMPRIMER Le BILAN',fontSize: 13,width: 200,height: 50,backgroundColor: colorApp,
                                             onTap: () async {
                                             }
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(left:30.0),
-                                          child: Button(text: 'AJUSTER LES PARAMETRE DE DIEMENSIONNEMENT',fontSize: 13,width: 200,height: 50,
+                                          child: Button(text: 'AJUSTER LES PARAMETRE DE DIEMENSIONNEMENT',fontSize: 13,width: 200,height: 50,backgroundColor: colorApp,
                                               onTap: () async {
                                               }
                                           ),
@@ -317,9 +317,6 @@ class _BilanResultState extends State<BilanResult> {
 
   List<TableRow> listDataRow(List headItems,List<List> items) {
     List<TableRow> result = [];
-    notifier.dataPowerEnergy[0] = [];
-    notifier.dataPowerEnergy[1] = [];
-
     TextStyle style = const TextStyle(
     fontFamily: "Oswald-Normal",
     color: Colors.black,
@@ -348,7 +345,7 @@ class _BilanResultState extends State<BilanResult> {
       ),
     );
 
-    for (int i = 0, c = items.length; i < c; i++) {
+    for (int i=0,c=items.length;i<c;i++) {
       List<Widget> listWidget = [];
       listWidget.add(
           Center(child: Padding(
@@ -362,19 +359,15 @@ class _BilanResultState extends State<BilanResult> {
           child: Text('${items[i][j]}',style: style,),
         )));
       }
-      int power = items[i][1] * items[i][2],
-          t = items[i][4] + items[i][5];
 
       listWidget.add(Center(child: Padding(
         padding: const EdgeInsets.only(top: 10.0,bottom: 10.0),
-        child: Text('$power W',style: style,),
+        child: Text('${notifier.dataPowerEnergy[0][i]} W',style: style,),
       )));
       listWidget.add(Center(child: Padding(
         padding: const EdgeInsets.only(top: 10.0,bottom: 10.0),
-        child: Text('${power * t}',style: style,),
+        child: Text('${notifier.dataPowerEnergy[1][i]}',style: style,),
       )));
-      notifier.dataPowerEnergy[0].add(power);
-      notifier.dataPowerEnergy[1].add(power * t);
       result.add(
           TableRow(
               decoration: BoxDecoration(
@@ -388,7 +381,7 @@ class _BilanResultState extends State<BilanResult> {
   }
 
   BarChart profileCharge(){
-
+    print(notifier.dataPowerEnergy[1].length);
     int maxEnergy = notifier.dataPowerEnergy[1].reduce((a, b) => a > b ? a : b);
     maxEnergy = roundToNearestTen(maxEnergy*1.0);
 
@@ -415,7 +408,7 @@ class _BilanResultState extends State<BilanResult> {
                     if(value.toInt() == i ){
                       return Padding(
                         padding: const EdgeInsets.only(top :10.0),
-                        child: Text(notifier.dataList[i][0], style: style),
+                        child: Text(notifier.dataList[i][0].text, style: style),
                       );
                     }
                   }

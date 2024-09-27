@@ -19,7 +19,6 @@ class _ResultProjectState extends State<ResultProject> {
 
   final formKey = GlobalKey<FormState>();
 
-  List<List<TextEditingController>> listController = [];
 
   @override
   void initState() {
@@ -108,7 +107,7 @@ class _ResultProjectState extends State<ResultProject> {
                             const Spacer(),
                             Button(text: 'Ajouter manuellement les données',fontSize: 13,width: 200,height: 50,backgroundColor: colorApp,
                                 onTap: () async {
-                                  await saveProject();
+                                  notifier.addData(['','','','','','','']);
                                 }
                             ),
 
@@ -261,7 +260,6 @@ class _ResultProjectState extends State<ResultProject> {
 
     for(int i=0,c=items.length;i<c;i++){
       List<Widget> listWidget = [];
-      List<TextEditingController> controllers = [];
       listWidget.add(
           Center(child: Padding(
             padding: const EdgeInsets.only(top: 10.0,bottom: 10.0),
@@ -275,12 +273,7 @@ class _ResultProjectState extends State<ResultProject> {
       );
 
       for(int j=0,a=items[i].length;j<a;j++){
-        controllers.add(TextEditingController());
-        controllers[j].text = '${items[i][j]}';
-        listWidget.add(Center(child: Padding(
-            padding: const EdgeInsets.only(top: 10.0,bottom: 10.0),
-            child: entryFieldBilan(controllers[j])//Text('${items[i][j]}',style: style,),
-        )));
+        listWidget.add(Center(child: entryFieldBilan(notifier.dataList[i][j])));
       }
       result.add(
           TableRow(
@@ -290,7 +283,6 @@ class _ResultProjectState extends State<ResultProject> {
               children: listWidget
           )
       );
-      listController.add(controllers);
     }
     return result;
   }
@@ -299,17 +291,17 @@ class _ResultProjectState extends State<ResultProject> {
 
     return TextFormField(
       controller: controller,
+      textAlign: TextAlign.center,
       decoration:  const InputDecoration(
-        fillColor: Colors.white,
-        filled: true,
-        hoverColor: Colors.white,
         contentPadding: EdgeInsets.only(left: 10,right: 10,bottom: 10),
+          border: InputBorder.none
       ),
       style: const TextStyle(
         fontFamily: "Oswald-Normal",
         color: Colors.black,
         fontSize: 17,
         wordSpacing: 3,
+
       ),
     );
   }
