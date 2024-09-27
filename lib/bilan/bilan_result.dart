@@ -434,6 +434,8 @@ class _BilanResultState extends State<BilanResult> {
       ),
     );
   }
+
+
 }
 
 List<BarChartGroupData> listBar(List<List> items){

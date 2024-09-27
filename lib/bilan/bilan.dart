@@ -19,6 +19,8 @@ class _ResultProjectState extends State<ResultProject> {
 
   final formKey = GlobalKey<FormState>();
 
+  List<List<TextEditingController>> listController = [];
+
   @override
   void initState() {
     super.initState();
@@ -86,14 +88,14 @@ class _ResultProjectState extends State<ResultProject> {
                           ),
                         ),
                         ChangeNotifierProvider(
-                          create: (BuildContext context)=>notifier,
-                          child: Consumer<ChangeListData>(
+                            create: (BuildContext context)=>notifier,
+                            child: Consumer<ChangeListData>(
                               builder: (context,notifier,_)=>Table(
                                 border: TableBorder.all(color: Colors.white),
                                 columnWidths: columnHeadWidth(listColumn),
                                 children: listItemsRow(listColumn, notifier.dataList),
                               ),
-                          )
+                            )
                         ),
                       ],
                     ),
@@ -104,23 +106,23 @@ class _ResultProjectState extends State<ResultProject> {
                         child: Row(
                           children: [
                             const Spacer(),
-                            Button(text: 'Ajouter manuellement les données',fontSize: 13,width: 200,height: 50,
-                              onTap: () async {
-                                await saveProject();
-                              }
+                            Button(text: 'Ajouter manuellement les données',fontSize: 13,width: 200,height: 50,backgroundColor: colorApp,
+                                onTap: () async {
+                                  await saveProject();
+                                }
                             ),
 
                             const Spacer(),
 
-                            Button(text: 'Sélectionner les données',fontSize: 13,width: 170,height: 50,
-                              onTap: () async {
-                                Objects().showCustomOverlay(context);
-                              }
+                            Button(text: 'Sélectionner les données',fontSize: 13,width: 170,height: 50,backgroundColor: colorApp,
+                                onTap: () async {
+                                  Objects().showCustomOverlay(context);
+                                }
                             ),
 
                             const Spacer(),
 
-                            Button(text: 'Lancer le bilan',fontSize: 13,width: 170,height: 50, onTap: () {
+                            Button(text: 'Lancer le bilan',fontSize: 13,width: 170,height: 50,backgroundColor: colorApp, onTap: () {
                               Navigator.of(context).pushNamed('/bilanResult');
                             },),
 
@@ -236,12 +238,6 @@ class _ResultProjectState extends State<ResultProject> {
 
   List<TableRow> listItemsRow(List headItems,List<List> items){
     List<TableRow> result = [];
-    TextStyle style = const TextStyle(
-      fontFamily: "Oswald-Normal",
-      color: Colors.black,
-      fontSize: 17,
-      wordSpacing: 3,
-    );
     result.add(
       TableRow(
           decoration: BoxDecoration(
@@ -265,16 +261,25 @@ class _ResultProjectState extends State<ResultProject> {
 
     for(int i=0,c=items.length;i<c;i++){
       List<Widget> listWidget = [];
+      List<TextEditingController> controllers = [];
       listWidget.add(
           Center(child: Padding(
             padding: const EdgeInsets.only(top: 10.0,bottom: 10.0),
-            child: Text('${i + 1}',style: style,),
+            child: Text('${i + 1}',style: const TextStyle(
+              fontFamily: "Oswald-Normal",
+              color: Colors.black,
+              fontSize: 17,
+              wordSpacing: 3,
+            ),),
           ))
       );
+
       for(int j=0,a=items[i].length;j<a;j++){
+        controllers.add(TextEditingController());
+        controllers[j].text = '${items[i][j]}';
         listWidget.add(Center(child: Padding(
-          padding: const EdgeInsets.only(top: 10.0,bottom: 10.0),
-          child: Text('${items[i][j]}',style: style,),
+            padding: const EdgeInsets.only(top: 10.0,bottom: 10.0),
+            child: entryFieldBilan(controllers[j])//Text('${items[i][j]}',style: style,),
         )));
       }
       result.add(
@@ -285,8 +290,28 @@ class _ResultProjectState extends State<ResultProject> {
               children: listWidget
           )
       );
+      listController.add(controllers);
     }
     return result;
+  }
+
+  Widget entryFieldBilan(TextEditingController controller){
+
+    return TextFormField(
+      controller: controller,
+      decoration:  const InputDecoration(
+        fillColor: Colors.white,
+        filled: true,
+        hoverColor: Colors.white,
+        contentPadding: EdgeInsets.only(left: 10,right: 10,bottom: 10),
+      ),
+      style: const TextStyle(
+        fontFamily: "Oswald-Normal",
+        color: Colors.black,
+        fontSize: 17,
+        wordSpacing: 3,
+      ),
+    );
   }
 }
 

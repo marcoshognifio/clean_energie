@@ -1,8 +1,6 @@
 import 'package:clean_energie/component/constante_value.dart';
 import 'package:clean_energie/data/data.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../component/button.dart';
 import '../component/get_list.dart';
 
@@ -63,8 +61,10 @@ class _CreateProjectState extends State<CreateProject> {
       };
 
       await DatabaseHelper().addProject(project);
+
+      Navigator.pushNamed(context, '/result_project');
     }
-    Navigator.pushNamed(context, '/result_project');
+
   }
 
   @override
@@ -127,7 +127,7 @@ class _CreateProjectState extends State<CreateProject> {
                                      'text',
                                      RegExp(r''),
                                      projectNameController,
-                                     true,
+                                     false,
                                      'Ce champ est obligatoire'
                                  ),
 
@@ -135,7 +135,7 @@ class _CreateProjectState extends State<CreateProject> {
                                      'date',
                                      RegExp(r''),
                                      dateController,
-                                     true,
+                                     false,
                                      'Ce champ est obligatoire'
                                  ),
 
@@ -143,7 +143,7 @@ class _CreateProjectState extends State<CreateProject> {
                                      'text',
                                      RegExp(r''),
                                      placeController,
-                                     true,
+                                     false,
                                      'Ce champ est obligatoire'
                                  ),
                                  getType =  GetList(text: 'Type d\'application',items: listTypeProject,),
@@ -152,7 +152,7 @@ class _CreateProjectState extends State<CreateProject> {
                                      'text',
                                      RegExp(r''),
                                      clientController,
-                                     true,
+                                     false,
                                      'Ce champ est obligatoire'
                                  ),
 
@@ -160,7 +160,7 @@ class _CreateProjectState extends State<CreateProject> {
                                      'text',
                                      RegExp(r''),
                                      clientAddressController,
-                                     true,
+                                     false,
                                      'Ce champ est obligatoire'
                                  ),
 
@@ -168,7 +168,7 @@ class _CreateProjectState extends State<CreateProject> {
                                      'text',
                                      RegExp(r''),
                                      phoneNumberController,
-                                     true,
+                                     false,
                                      'Ce champ est obligatoire'
                                  ),
 
@@ -176,7 +176,7 @@ class _CreateProjectState extends State<CreateProject> {
                                      'text',
                                      RegExp(r'^[a-zA-Z0-9]+\@{1}[a-z]+\.{1}[a-z]+$'),
                                      emailController,
-                                     true,
+                                     false,
                                      'Ce champ est obligatoire'
                                  ),
 
@@ -184,7 +184,7 @@ class _CreateProjectState extends State<CreateProject> {
                                      'text',
                                      RegExp(r''),
                                      managerProjectController,
-                                     true,
+                                     false,
                                      'Ce champ est obligatoire'
                                  )
                                ],
@@ -194,7 +194,7 @@ class _CreateProjectState extends State<CreateProject> {
 
                      ],
                    ),
-                   
+
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(
@@ -202,12 +202,12 @@ class _CreateProjectState extends State<CreateProject> {
                         child: Row(
                           children: [
                             const Spacer(),
-                            Button(text: 'Enregistrer',fontSize: 20,width: 200,height: 40, onTap: () async {
+                            Button(text: 'Enregistrer',fontSize: 20,width: 200,height: 40,backgroundColor: colorApp, onTap: () async {
                               await saveProject();
                             },),
                             Padding(
                               padding: const EdgeInsets.only(left: 50.0),
-                              child: Button(text: 'Annuler',fontSize: 20,width: 200,height: 40, onTap: () {
+                              child: Button(text: 'Annuler',fontSize: 20,width: 200,height: 40,backgroundColor: colorApp, onTap: () {
                                 Navigator.of(context).pop();
                               },),
                             ),
@@ -258,8 +258,7 @@ class _CreateProjectState extends State<CreateProject> {
                 )
             ),
           ),
-          Container(
-            height: 30,
+          SizedBox(
             width: 300,
             child: TextFormField(
               controller: controller,
@@ -298,19 +297,21 @@ class _CreateProjectState extends State<CreateProject> {
                 }
               },
                decoration:  InputDecoration(
+                    isDense: true,
                     fillColor: Colors.white,
                     filled: true,
                     hoverColor: Colors.white,
-                   contentPadding: const EdgeInsets.only(left: 10,right: 10,bottom: 10),
+                   contentPadding: const EdgeInsets.only(left: 10,right: 10,bottom: 10,top: 10),
                     border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                        borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                         borderSide: BorderSide(
                             width: 1,
                             color: colorBorder
                         ),
                     ),
+
                  enabledBorder: OutlineInputBorder(
-                   borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                    borderSide: BorderSide(
                        width: 1,
                        color: colorBorder

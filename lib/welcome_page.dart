@@ -1,3 +1,4 @@
+import 'package:clean_energie/component/button.dart';
 import 'package:clean_energie/component/constante_value.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -78,11 +79,40 @@ class _LeftSideState extends State<LeftSide> {
             const Spacer(),
             Padding(
               padding: const EdgeInsets.only(bottom: 20.0),
-              child: buttonProject('CREER NOUVEAU PROJET', (){
-                Navigator.pushNamed(context, '/new_project');
-              }),
+              child:  Button(
+                text: 'CREER NOUVEAU PROJET',
+                width: 200,
+                height: 50,
+                style: TextStyle(
+                  fontFamily: "Oswald-Bold",
+                  color: colorApp,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  wordSpacing: 3,
+                ),
+                backgroundColor: colorButton,
+                onTap:(){
+                    Navigator.pushNamed(context, '/new_project');
+                  }
+              ),
             ),
-            buttonProject('OUVRIR UN PROJET', (){}),
+
+            Button(
+                text: 'OUVRIR UN PROJET',
+                style: TextStyle(
+                  fontFamily: "Oswald-Bold",
+                  color: colorApp,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  wordSpacing: 3,
+                ),
+                backgroundColor: colorButton,
+                width: 200,
+                height: 50,
+                onTap:(){
+                  Navigator.pushNamed(context, '/new_project');
+                }
+            ),
             const Spacer(),
             Image.asset('assets/RESSOURCES1/solar-ai.png',width: 200,)
           ],
@@ -91,35 +121,6 @@ class _LeftSideState extends State<LeftSide> {
     );
   }
 
-  Widget buttonProject(String text, VoidCallback onTap){
-
-    return SizedBox(
-      width: 200,
-      child: ElevatedButton(
-
-        style: ElevatedButton.styleFrom(
-
-          backgroundColor: colorProject, //Color(0xff2f52f6),
-          padding:const  EdgeInsets.only(top: 20, bottom: 20,left: 10,right: 10),
-          elevation: 10,
-          side: BorderSide(color: colorBorder,width: 1),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-        ),
-        onPressed: onTap,
-        child: Text(text,
-            style: TextStyle(
-                  fontFamily: "Oswald-Bold",
-                  color: colorApp,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  wordSpacing: 3,
-                )
-        )
-        ),
-    );
-  }
 }
 
 class RightSide extends StatelessWidget {

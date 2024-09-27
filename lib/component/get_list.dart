@@ -34,18 +34,18 @@ class GetList extends StatelessWidget {
             ),
         ),
       Container(
-        height: 40,
         width: 300,
         child: ButtonTheme(
           alignedDropdown: true,
           child: DropdownButtonFormField(
               decoration:  InputDecoration(
+                isDense: true,
                 contentPadding: const EdgeInsets.all(10),
                   fillColor: Colors.white,
                   filled: true,
                   hoverColor: Colors.white,
                   border: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                      borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                       borderSide: BorderSide(
                           width: 1,
                           color: colorBorder
@@ -62,11 +62,10 @@ class GetList extends StatelessWidget {
               },
               validator: (value) {
                 if (value == null ) {
-                  return 'Veuillez sélectionner une option';
+                  selectedValue = items[0]['value'];
                 }
                 return null;
               }
-
           ),
         ),
         ),
